@@ -1,6 +1,6 @@
 package Model;
 
-import appManager.SwimSchoolManager;
+import Manager.SwimSchoolManager;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
