@@ -4,14 +4,13 @@ import Manager.BookingManager;
 import Manager.LearnerManager;
 import Manager.LessonManager;
 import Model.Lesson;
-import appManager.SwimSchoolManager;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+import Manager.SwimSchoolManager;
 /**
  * This class generates and manages lesson data for a swimming school application.
  * It schedules lessons on specific days of the week and assigns learners to those lessons randomly.

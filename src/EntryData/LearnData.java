@@ -4,8 +4,7 @@ import Manager.BookingManager;
 import Manager.LearnerManager;
 import Model.Booking;
 import Model.Learner;
-import appManager.SwimSchoolManager;
-
+import Manager.SwimSchoolManager;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
