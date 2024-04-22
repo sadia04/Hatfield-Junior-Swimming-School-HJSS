@@ -29,6 +29,9 @@ public class BookingManager {
         this.learnerManager = LearnerManager.getLearnerManager();
     }
 
+    public BookingRepository getBookingRepository() {
+        return bookingDatabase;
+    }
     /**
      * Creates a new booking for a lesson.
      * @param learnerID the ID of the learner
