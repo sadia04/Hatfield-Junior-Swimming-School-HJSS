@@ -17,8 +17,26 @@ public class LessonDisplay {
      */
     public void displayLessons() {
         List<Lesson> allLessons = lessonManager.getAllLessons();
-        for (Lesson lesson : allLessons) {
-            System.out.println(lesson);
+        if (allLessons.isEmpty()) {
+            System.out.println("No lessons available.");
+            return;
         }
+
+        System.out.println("Available Lessons:");
+        System.out.println("-------------------------------------------------------------------------------------");
+        System.out.printf("%-10s %-10s %-15s %-10s %-20s %-7s %-15s\n",
+                "Date", "Day", "Coach", "Grade", "Lesson Ref", "Capacity", "Time Slot");
+        System.out.println("-------------------------------------------------------------------------------------");
+        for (Lesson lesson : allLessons) {
+            System.out.printf("%-10s %-10s %-15s %-10d %-20s %-7d %-15s\n",
+                    lesson.getDate(),
+                    lesson.getDayOfTheWeek(),
+                    lesson.getCoach(),
+                    lesson.getGradeLevel(),
+                    lesson.getLessonRef(),
+                    lesson.getCapacity(),
+                    lesson.getTimeLabs());
+        }
+        System.out.println("-------------------------------------------------------------------------------------");
     }
 }

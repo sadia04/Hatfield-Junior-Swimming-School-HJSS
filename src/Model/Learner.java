@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Represents a learner with personal details and lesson interaction records.
@@ -18,7 +19,7 @@ public class Learner {
     private List<String> bookedLessonsList;
     private List<String> attendedLessonsList;
     private List<String> cancelledLessonsList;
-
+    private List<Booking> bookings;
     private static int count = 0;
 
     /**
@@ -46,6 +47,7 @@ public class Learner {
         this.bookedLessonsList = new ArrayList<>();
         this.attendedLessonsList = new ArrayList<>();
         this.cancelledLessonsList = new ArrayList<>();
+        this.bookings = new ArrayList<>();
     }
 
     /**
@@ -131,7 +133,12 @@ public class Learner {
     public void setCancelledLessonsList(List<String> cancelledLessonsList) {
         this.cancelledLessonsList = cancelledLessonsList;
     }
-
+    public List<Booking> getBookingsForMonth(LocalDate start, LocalDate end) {
+        return bookings.stream()
+                .filter(booking -> !booking.getLesson().getDate().isBefore(start) &&
+                        !booking.getLesson().getDate().isAfter(end))
+                .collect(Collectors.toList());
+    }
     @Override
     public String toString() {
         return "Learner{" +

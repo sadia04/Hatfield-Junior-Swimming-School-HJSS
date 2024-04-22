@@ -51,7 +51,9 @@ public class LearnersRepository {
     public List<Learner> getLearnerList() {
         return learnerList;
     }
-
+    public List<Learner> getAllLearners() {
+        return new ArrayList<>(learnerList);
+    }
     /**
      * Retrieves a Learner by their ID.
      *

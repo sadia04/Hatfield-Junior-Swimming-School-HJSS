@@ -1,9 +1,8 @@
 package view;
 
 import Manager.BookingManager;
-import Manager.LessonManager;
+
 import Manager.ReviewManager;
-import Manager.SwimSchoolManager;
 import Model.Booking;
 import Model.Lesson;
 import utils.InputValidator;
@@ -19,11 +18,9 @@ import java.util.Scanner;
  */
 public class BookingDisplay {
     private final Scanner scanner = new Scanner(System.in);
-    private final SwimSchoolManager swimSchoolManager = SwimSchoolManager.getSwimSchoolManager();
-    private final BookingManager bookingManager = new BookingManager();
+     private final BookingManager bookingManager = new BookingManager();
     private final TimesSlot timesSlot = new TimesSlot();
     private final InputValidator inputValidator = new InputValidator();
-    private final LessonManager lessonManager = new LessonManager();
     private final ReviewManager reviewManager = new ReviewManager();
 
     /**
@@ -228,6 +225,7 @@ public class BookingDisplay {
         }
     }
 
+
     /**
      * Guides the user through attending a lesson and optionally writing a review afterwards.
      */
@@ -238,17 +236,21 @@ public class BookingDisplay {
             String bookingId = scanner.nextLine();
 
             String result = bookingManager.attendingLesson(bookingId);
-            if (result.contains("Error")) {
+            if (result.contains("This lesson has already been attended.")) {
                 System.out.println(result);
                 return;
             }
+            else{
+                System.out.println(result);
+                System.out.println();
 
-            System.out.println(result);
-            System.out.println();
+                Lesson lesson = bookingManager.getBookingByBkId(bookingId).getLesson();
 
-            Lesson lesson = bookingManager.getBookingByBkId(bookingId).getLesson();
+                writeReviewNow(lesson);
 
-            writeReviewNow(lesson);
+            }
+
+
         } catch (Exception e) {
             System.out.println("An error occurred: " + e.getMessage());
         }

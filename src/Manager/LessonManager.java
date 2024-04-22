@@ -1,7 +1,7 @@
 package Manager;
 
-import Model.Lesson;
 import Repository.LessonRepository;
+import Model.Lesson;
 import utils.InputValidator;
 
 import java.time.DayOfWeek;
@@ -14,7 +14,6 @@ import java.util.List;
 public class LessonManager {
     private static final LessonManager LESSON_MANAGER = new LessonManager();
     private final LessonRepository lessonRepository = LessonRepository.getLessonDB();
-    private final InputValidator validator = new InputValidator();
 
     public LessonManager() {}
 

@@ -1,7 +1,6 @@
 package Repository;
 
 import Model.Booking;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +27,14 @@ public class BookingRepository {
      */
     public BookingRepository() {
         bookingList = new ArrayList<>();
+    }
+    /**
+     * Deletes a booking from the repository.
+     * @param bookingId the ID of the booking to delete
+     * @return true if the booking was deleted, false if it was not found
+     */
+    public boolean deleteBooking(String bookingId) {
+        return bookingList.removeIf(booking -> booking.getBookingId().equals(bookingId));
     }
 
     /**
@@ -69,20 +76,6 @@ public class BookingRepository {
         return filteredBookings;
     }
 
-    /**
-     * Returns a list of bookings with a specific status.
-     * @param status the status of the bookings to be retrieved (e.g., "Booked", "Cancelled")
-     * @return a list of bookings that have the specified status
-     */
-    public List<Booking> getBookingsByStatus(String status) {
-        List<Booking> filteredBookings = new ArrayList<>();
-        for (Booking booking : bookingList) {
-            if (booking.getStatus().equals(status)) {
-                filteredBookings.add(booking);
-            }
-        }
-        return filteredBookings;
-    }
 
     /**
      * Retrieves a booking by its ID.

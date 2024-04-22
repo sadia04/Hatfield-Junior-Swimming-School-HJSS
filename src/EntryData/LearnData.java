@@ -1,10 +1,11 @@
 package EntryData;
 
+import Manager.SwimSchoolManager;
 import Manager.BookingManager;
 import Manager.LearnerManager;
 import Model.Booking;
 import Model.Learner;
-import Manager.SwimSchoolManager;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,11 +74,22 @@ public class LearnData {
      * @return a randomly generated date of birth
      */
     private LocalDate generateRandomlyDOB() {
-        int year = LocalDate.now().getYear() - 11;
-        int maxYear = LocalDate.now().getYear() - 4;
-        int randomYear = year + new Random().nextInt(maxYear - year + 1);
-        int month = new Random().nextInt(12) + 1;
-        int day = new Random().nextInt(28) + 1;
+        // Get the current year
+        int currentYear = LocalDate.now().getYear();
+
+        // Calculate the range for the year to be between 5 and 11 years ago
+        int minYear = currentYear - 11;  // 11 years ago
+        int maxYear = currentYear - 5;   // 5 years ago
+
+        // Generate a random year within the range
+        Random random = new Random();
+        int randomYear = minYear + random.nextInt(maxYear - minYear + 1);
+
+        // Generate a random month and a safe day (1-28 avoids complications with February)
+        int month = random.nextInt(12) + 1;
+        int day = random.nextInt(28) + 1;
+
+        // Create and return the random LocalDate object
         return LocalDate.of(randomYear, month, day);
     }
 

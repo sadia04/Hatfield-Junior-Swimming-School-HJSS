@@ -1,10 +1,10 @@
 package Manager;
 
+import Repository.BookingRepository;
+import utils.InputValidator;
 import Model.Booking;
 import Model.Learner;
 import Model.Lesson;
-import Repository.BookingRepository;
-import utils.InputValidator;
 
 import java.util.List;
 import java.util.Objects;
@@ -56,34 +56,44 @@ public class BookingManager {
         }
     }
 
+
     /**
      * Updates an existing booking with a new lesson.
      * @param bookingId the ID of the booking to update
-     * @param lessonRef the reference of the new lesson
+     * @param newLessonRef the reference of the new lesson
      * @return a success message or an error message
      */
-    public String updateBooking(String bookingId, String lessonRef) {
-        try {
-            validator.validateInputs(bookingId, lessonRef);
-
-            Booking booking = getBookingByBkId(bookingId);
-            validator.validateBooking(booking, BOOKED_ST);
-
-            Lesson oldLesson = booking.getLesson();
-            oldLesson.removeBookedLearner(booking.getLearnerId());
-
-            Learner learner = getLearnerByLeId(booking.getLearnerId());
-            learner.getBookedLessonsList().remove(bookingId);
-
-            Lesson newLesson = lessonManager.getLessonByReference(lessonRef);
-            validator.validateNewLesson(newLesson);
-
-            updateBookingDetails(booking, newLesson, learner);
-
-            return "Booking updated successfully";
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            return handleException(e);
+    public String updateBooking(String bookingId, String newLessonRef) throws IllegalArgumentException, IllegalStateException {
+        Booking booking = bookingDatabase.getBookingByBooking(bookingId);
+        if (booking == null) {
+            throw new IllegalArgumentException("No booking found with ID: " + bookingId);
         }
+        if (!booking.getStatus().equals("Booked")) {
+            throw new IllegalStateException("Only booked sessions can be changed.");
+        }
+
+        Lesson oldLesson = booking.getLesson();
+        Lesson newLesson = lessonManager.getLessonByReference(newLessonRef);
+        if (newLesson == null) {
+            throw new IllegalArgumentException("No lesson found with reference: " + newLessonRef);
+        }
+        if (!newLesson.isAvailable()) {
+            throw new IllegalStateException("Selected lesson is fully booked.");
+        }
+
+        // Release the spot from the old lesson
+        oldLesson.removeBookedLearner(booking.getLearnerId());
+        // Book the new lesson
+        newLesson.addBookedLearner(booking.getLearnerId());
+        // Update booking details
+        booking.setLesson(newLesson);
+
+        // Update learner's booked lessons list with new lesson reference
+        Learner learner = learnerManager.getLearnerById(booking.getLearnerId());
+        learner.getBookedLessonsList().remove(oldLesson.getLessonRef());
+        learner.getBookedLessonsList().add(newLesson.getLessonRef());
+
+        return "Booking ID " + bookingId + " successfully updated to new lesson: " + newLessonRef;
     }
 
     /**
@@ -118,17 +128,41 @@ public class BookingManager {
      */
     public String attendingLesson(String bookingId) {
         try {
-            Objects.requireNonNull(bookingId, "Invalid booking ID");
+            Objects.requireNonNull(bookingId, "Invalid booking ID: " + bookingId);
 
+            // Retrieve the booking and the associated learner
             Booking booking = getBookingByBkId(bookingId);
-            Learner learner = getLearnerByLeId(booking.getLearnerId());
+            if (booking == null) {
+                throw new IllegalArgumentException("Booking not found with ID: " + bookingId);
+            }
 
+            Learner learner = getLearnerByLeId(booking.getLearnerId());
+            if (learner == null) {
+                throw new IllegalArgumentException("Learner not found for booking ID: " + bookingId);
+            }
+
+            // Check if the booking is already attended
+            if (booking.getStatus().equals(ATTENDED_ST)) {
+                return "This lesson has already been attended.";
+            }
+
+            // Remove booking ID from booked list and add to attended list
+            learner.getBookedLessonsList().remove(bookingId);
             learner.getAttendedLessonsList().add(bookingId);
+
+            // Update the status of the booking
             booking.setStatus(ATTENDED_ST);
 
-            return "Lesson attended successfully";
+            // Check if the lesson grade is exactly one level above the learner's current grade
+            if (booking.getLesson().getGradeLevel() == learner.getCurrentGradeLevel() + 1) {
+                // Update the learner's grade to the level of the lesson attended
+                learner.setCurrentGradeLevel(booking.getLesson().getGradeLevel());
+            }
+
+            return "Lesson attended successfully. " + (learner.getCurrentGradeLevel() == booking.getLesson().getGradeLevel() ?
+                    "Learner's grade level has been updated to " + learner.getCurrentGradeLevel() : "Learner's grade level remains unchanged.");
         } catch (IllegalArgumentException e) {
-            return handleException(e);
+            return handleException(e);  // Ensure handleException method can properly log or deal with the exception
         }
     }
 
@@ -146,12 +180,6 @@ public class BookingManager {
         return Optional.ofNullable(learnerManager.getLearnerById(learnerId))
                 .orElseThrow(() -> new IllegalArgumentException("Learner not found"));
     }
-    private void updateBookingDetails(Booking booking, Lesson newLesson, Learner learner) {
-        booking.setLesson(newLesson);
-        newLesson.addBookedLearner(booking.getLearnerId());
-        booking.setStatus(BOOKED_ST);
-    }
-    // Additional getters for all bookings or bookings by a specific learner
     public List<Booking> getAllBookings() {
         return bookingDatabase.getAllBookings();
     }
