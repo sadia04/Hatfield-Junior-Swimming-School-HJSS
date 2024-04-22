@@ -29,7 +29,7 @@ public class LearnerManagerTest {
     }
     @Test()
     public void testRegisterLearnerWithInvalidDOB() {
-        String name = "Test name";
+        String name = "sadia";
         LocalDate dob = LocalDate.of(2018, 10, 10);
         manager.registerLearner(name, dob, "Female", "+447700900123", 2);
     }
