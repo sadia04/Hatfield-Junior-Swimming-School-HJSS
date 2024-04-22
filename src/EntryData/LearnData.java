@@ -44,7 +44,7 @@ public class LearnData {
             String name = generateRandomlyNames();
             String gender = generateRandomlyGender();
             LocalDate dob = generateRandomlyDOB();
-            String emergencyNo = generateRandomlyEmergencyNo();
+             String emergencyNo = generateRandomlyEmergencyNo();
             int gradeLevel = swimSchoolManager.assignGradeLevel();
             learnerManager.registerLearner(name, dob, gender, emergencyNo, gradeLevel);
         }
@@ -77,9 +77,9 @@ public class LearnData {
         // Get the current year
         int currentYear = LocalDate.now().getYear();
 
-        // Calculate the range for the year to be between 5 and 11 years ago
+        // Define the year range to be strictly between 5 and 11 years ago
         int minYear = currentYear - 11;  // 11 years ago
-        int maxYear = currentYear - 5;   // 5 years ago
+        int maxYear = currentYear - 6;   // 6 years ago, this excludes the current year - 5 scenario
 
         // Generate a random year within the range
         Random random = new Random();

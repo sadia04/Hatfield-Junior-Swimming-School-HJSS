@@ -122,14 +122,15 @@ public class InputValidator {
             throw new IllegalArgumentException("Date of birth cannot be null.");
         }
         LocalDate now = LocalDate.now();
-        LocalDate fiveYearsAgo = now.minusYears(5);
+        LocalDate justOverFiveYearsAgo = now.minusYears(5).plusDays(1);
         LocalDate elevenYearsAgo = now.minusYears(11);
 
-        // Date of birth must be after eleven years ago and before five years ago
-        if (dateOfBirth.isAfter(fiveYearsAgo) || dateOfBirth.isBefore(elevenYearsAgo)) {
-            throw new IllegalArgumentException("Date of birth must be between 5 and 11 years ago.");
+        // Date of birth must be strictly between eleven years ago and just over five years ago
+        if (dateOfBirth.isBefore(elevenYearsAgo) || dateOfBirth.isEqual(elevenYearsAgo) || dateOfBirth.isAfter(justOverFiveYearsAgo)) {
+            throw new IllegalArgumentException("Date of birth must be strictly between 11 and just over 5 years ago.");
         }
     }
+
 
 
     public void validateEmergencyContact(String emergencyContact) {

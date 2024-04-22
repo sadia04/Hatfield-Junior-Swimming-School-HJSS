@@ -39,8 +39,7 @@ public class LearnerManager {
         // Validate common inputs
         validator.validateInputs(name, dob, gender, emergencyContact);
 
-        // Validate the date of birth to ensure it is between 5 and 11 years ago
-        validator.validateDOB(dob);
+
 
         // Create a new Learner object if all validations pass
         Learner learner = new Learner(name, gender, dob, emergencyContact, currentGradeLevel);

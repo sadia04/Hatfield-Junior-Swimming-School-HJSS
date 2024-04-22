@@ -36,7 +36,7 @@ public class Main {
         LessonData lessonDataGenerator = new LessonData();
 
         // Generate data
-        learnDataGenerator.generateEntries(60);
+        learnDataGenerator.generateEntries(50);
         lessonDataGenerator.generateRandomlyLessonData();
         lessonDataGenerator.updateData();
         bookingDataGenerator.randomlyGenerateBookings();
