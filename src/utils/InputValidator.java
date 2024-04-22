@@ -1,13 +1,30 @@
 package utils;
 
-import Model.Booking;
-import Model.Learner;
-import Model.Lesson;
-
 import java.time.LocalDate;
 import java.util.Objects;
 
+import Model.Booking;
+import Model.Learner;
+import Model.Lesson;
 public class InputValidator {
+
+    // Functional interface for string validation
+    @FunctionalInterface
+    public interface IValidateString {
+        void validate(String value) throws IllegalArgumentException;
+    }
+
+    // Functional interface for integer validation
+    @FunctionalInterface
+    public interface IValidateInt {
+        void validate(int value) throws IllegalArgumentException;
+    }
+
+    // Functional interface for LocalDate validation
+    @FunctionalInterface
+    public interface IValidateLocalDate {
+        void validate(LocalDate date) throws IllegalArgumentException;
+    }
     /**
      * Validates that an object is not null.
      * @param object the object to validate
