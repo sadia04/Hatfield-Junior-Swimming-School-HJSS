@@ -21,9 +21,9 @@ public class SwimSchoolManager {
     }
 
     /**
-     * Provides the singleton instance of the Manager.SwimSchoolManager.
+     * Provides the singleton instance of the SwimSchoolManager.
      * If no instance exists, a new one is created and returned.
-     * @return The single instance of Manager.SwimSchoolManager.
+     * @return The single instance of SwimSchoolManager.
      */
     public static SwimSchoolManager getSwimSchoolManager() {
         if (swimSchoolManager == null) {

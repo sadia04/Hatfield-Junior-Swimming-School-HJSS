@@ -14,8 +14,7 @@ import java.util.Scanner;
  */
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
-    private static final LessonRepository lessonRepository = new LessonRepository();
-    private static final LearnerDisplay learnerDisplay = new LearnerDisplay();
+     private static final LearnerDisplay learnerDisplay = new LearnerDisplay();
     private static final LessonDisplay lessonDisplay = new LessonDisplay();
     private static final BookingDisplay bookingDisplay = new BookingDisplay();
     private static final ReviewDisplay reviewDisplay = new ReviewDisplay();
@@ -30,7 +29,7 @@ public class Main {
      * Initializes the system by loading all necessary data.
      */
     private static void initializeSystem() {
-        System.out.println("Loading data...");
+        System.out.println("Loading data ");
 
         // Create instances of data generators
         BookingsData bookingDataGenerator = new BookingsData();

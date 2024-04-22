@@ -97,10 +97,10 @@ public class TimesSlot {
      * Prints the heading for the timetable display, showing the date range.
      */
     private void consoleTimeHeading() {
-        System.out.println("\nTimetable from " + startDate + " to " + endDate);
-        System.out.println("+-------------------------------------------------------------------------------------------------------------+");
-        System.out.println("| Date       | Day         | Coach            | Grade | Lesson Ref         | Capacity | Status     | Time Slot |");
-        System.out.println("+-------------------------------------------------------------------------------------------------------------+");
+        System.out.println("Timetable from: " + startDate + " to " + endDate);
+        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("| Date       | Day         | Coach            | Grade Level | Lesson Ref           | Capacity | Status       | Time Slot           |");
+        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------");
     }
 
     /**
@@ -109,24 +109,15 @@ public class TimesSlot {
      */
     private void consoleTimeBody(List<Lesson> lessons) {
         try {
-            boolean hasLessons = false;
             for (Lesson lesson : lessons) {
-                if (lesson.getDate().isAfter(startDate) && lesson.getDate().isBefore(endDate)) {
-                    hasLessons = true;
-                    System.out.printf("| %-10s | %-11s | %-16s | %-5d | %-18s | %-8d | %-10s | %-10s |%n",
-                            lesson.getDate(), lesson.getDayOfTheWeek().toString(),
-                            lesson.getCoach(), lesson.getGradeLevel(),
-                            lesson.getLessonRef(), lesson.getCapacity(),
-                            lesson.getStatusBooking(), lesson.getTimeLabs());
-                }
+                if (lesson.getDate().isAfter(startDate) && lesson.getDate().isBefore(endDate))
+                    System.out.printf("| %-10s | %-11s | %-16s | %-11d | %-20s | %-8d | %-12s | %-19s |%n",
+                            lesson.getDate(), lesson.getDayOfTheWeek(), lesson.getCoach(), lesson.getGradeLevel(),
+                            lesson.getLessonRef(), lesson.getCapacity(), lesson.getStatusBooking(), lesson.getTimeLabs());
             }
-            if (!hasLessons) {
-                System.out.println("|                                     No lessons scheduled for this period                                     |");
-            }
-            System.out.println("+-------------------------------------------------------------------------------------------------------------+");
+            System.out.println("------------------------------------------------------------------------------------------------------------------------------------");
         } catch (Exception e) {
-            System.err.println("Error occurred while printing timetable body: " + e.getMessage());
+            System.err.println("Error occurred while printing timetable body.");
         }
     }
-
 }

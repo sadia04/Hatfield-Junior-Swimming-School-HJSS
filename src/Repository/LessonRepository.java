@@ -1,7 +1,6 @@
 package Repository;
 
 import Model.Lesson;
-
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
@@ -114,23 +113,7 @@ public class LessonRepository {
         return lessonList.size();
     }
 
-    /**
-     * Retrieves the lesson reference by its index in the list.
-     * @param index the index of the lesson in the list
-     * @return the lesson reference string
-     */
-    public String getLessonRefByIndex(int index) {
-        return lessonList.get(index).getLessonRef();
-    }
 
-    /**
-     * Selects a lesson reference randomly from the repository.
-     * @return a random lesson reference string
-     */
-    public String getLessonRefRandomly() {
-        int index = (int) (Math.random() * lessonList.size());
-        return lessonList.get(index).getLessonRef();
-    }
 
     /**
      * Randomly selects a Lesson from the repository.

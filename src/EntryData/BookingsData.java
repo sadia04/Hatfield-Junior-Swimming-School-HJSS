@@ -1,9 +1,9 @@
 package EntryData;
 
 import Manager.LessonManager;
+import Repository.BookingRepository;
 import Model.Booking;
 import Model.Lesson;
-import Repository.BookingRepository;
 
 import java.util.Random;
 
@@ -46,7 +46,7 @@ public class BookingsData {
 
         Booking booking = new Booking();
         booking.setStatus(randomStatus);
-        booking.setBookingId(booking.generateID());
+        booking.setBookingId(Booking.generateID());
 
         Lesson lesson = manager.getLessonRandomly();
         booking.setLesson(lesson);

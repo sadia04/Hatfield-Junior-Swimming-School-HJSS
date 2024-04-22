@@ -1,5 +1,7 @@
 package Model;
 
+import java.time.LocalDate;
+
 /**
  * Represents a booking for a lesson by a learner.
  */
@@ -9,6 +11,7 @@ public class Booking {
     private String learnerId;
     private String status;
     private static int count = 1;
+    private Learner learner;
 
     /**
      * Constructs an empty Booking.
@@ -69,6 +72,9 @@ public class Booking {
     public String getLearnerId() {
         return learnerId;
     }
+    public LocalDate getDate() {
+        return lesson.getDate();
+    }
 
     /**
      * Sets the learner ID for this booking.
@@ -99,7 +105,7 @@ public class Booking {
      * @return a unique booking ID string
      */
     public static String generateID() {
-        return String.format("Booking-22-T-%03d", count++);
+        return String.format("BookingS-24-%03d", count++);
     }
 
     @Override

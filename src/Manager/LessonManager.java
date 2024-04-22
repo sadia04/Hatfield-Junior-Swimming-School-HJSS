@@ -1,7 +1,7 @@
 package Manager;
 
-import Model.Lesson;
 import Repository.LessonRepository;
+import Model.Lesson;
 import utils.InputValidator;
 
 import java.time.DayOfWeek;

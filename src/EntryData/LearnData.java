@@ -1,10 +1,11 @@
 package EntryData;
 
+import Manager.SwimSchoolManager;
 import Manager.BookingManager;
 import Manager.LearnerManager;
 import Model.Booking;
 import Model.Learner;
-import Manager.SwimSchoolManager;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

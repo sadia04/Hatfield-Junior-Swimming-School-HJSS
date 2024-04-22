@@ -121,13 +121,16 @@ public class InputValidator {
         if (dateOfBirth == null) {
             throw new IllegalArgumentException("Date of birth cannot be null.");
         }
-        if (dateOfBirth.isAfter(LocalDate.now().minusYears(5))) {
-            throw new IllegalArgumentException("Date of birth must be at least 5 years ago.");
-        }
-        if (dateOfBirth.isBefore(LocalDate.now().minusYears(100))) {
-            throw new IllegalArgumentException("Date of birth is implausibly old. Please enter a correct date.");
+        LocalDate now = LocalDate.now();
+        LocalDate fiveYearsAgo = now.minusYears(5);
+        LocalDate elevenYearsAgo = now.minusYears(11);
+
+        // Date of birth must be after eleven years ago and before five years ago
+        if (dateOfBirth.isAfter(fiveYearsAgo) || dateOfBirth.isBefore(elevenYearsAgo)) {
+            throw new IllegalArgumentException("Date of birth must be between 5 and 11 years ago.");
         }
     }
+
 
     public void validateEmergencyContact(String emergencyContact) {
         if (emergencyContact == null || !emergencyContact.matches("^((\\+44)|(0))(7\\d{9})$")) {

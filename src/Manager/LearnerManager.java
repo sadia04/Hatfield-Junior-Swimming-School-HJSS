@@ -1,9 +1,8 @@
 package Manager;
 
-import Model.Learner;
 import Repository.LearnersRepository;
+import Model.Learner;
 import utils.InputValidator;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -37,10 +36,10 @@ public class LearnerManager {
      * @return a success message indicating registration status
      */
     public String registerLearner(String name, LocalDate dob, String gender, String emergencyContact, int currentGradeLevel) {
-        validator.validateInputs(name, dob, gender, emergencyContact); // Validate inputs are not null
+        validator.validateInputs(name, dob, gender, emergencyContact);
         Learner learner = new Learner(name, gender, dob, emergencyContact, currentGradeLevel);
         db.addLearner(learner);
-        return "Learner registered successfully!";
+        return "Learner registered successfully! "+"Learner ID ="+learner.getId();
     }
 
     /**
